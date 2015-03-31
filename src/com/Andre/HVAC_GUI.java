@@ -1,5 +1,7 @@
 package com.Andre;
 
+//TODO: figure out scroll pane issue
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -30,6 +32,7 @@ public class HVAC_GUI extends JFrame {
     private JCheckBox centralACCheckBox;
     private JCheckBox waterHeaterCheckBox;
     private JComboBox typeComboBox;
+    private JScrollPane scrollPanel;
 
     DefaultListModel<ServiceCall> serviceCalltListModel;
 
