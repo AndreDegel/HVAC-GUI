@@ -128,12 +128,11 @@ public class HVAC_GUI extends JFrame {
 
         resolveServiceCallButton.addActionListener(new ActionListener() {
             @Override
-            //TODO: NOT working yet
-            //Can't recognice specific class
             public void actionPerformed(ActionEvent e) {
                 //if a ticket is selected to be resolved
                 if (!HVAC_GUI.this.serviceList.isSelectionEmpty()) {
-                   //ServiceCall toDelete = HVAC_GUI.this.serviceList.getSelectedValues();
+                    //TODO:Fixed
+                   ServiceCall toDelete = (ServiceCall) HVAC_GUI.this.serviceList.getSelectedValue();
 
                     Date dateResolved = new Date(); //Default constructor creates date with current date/time
 
@@ -144,18 +143,19 @@ public class HVAC_GUI extends JFrame {
                             "Resolve Service Call",
                             JOptionPane.PLAIN_MESSAGE);
 
-                    /*//If a string was returned, set resolution and date, and delete ticket from list
+                    //If a string was returned, set resolution and date, and delete ticket from list
                     //if not ignore it
                     if ((s != null) && (s.length() > 0)) {
                         txtResolution.setText(s);
                         toDelete.setResolvedDate(dateResolved);
-                        toDelete.setResolution(txtResolved.getText());
+                        toDelete.setResolution(txtResolution.getText());
                         HVAC_GUI.this.serviceCalltListModel.removeElement(toDelete);
-                        clearTxt();
-                        txtIssue.setText("");
-                        txtReportedBy.setText("");
+                        //clearTxt();
+                        txtAddress.setText("");
+                        txtDescription.setText("");
+                        txtVar.setText("");
                         return;
-                    }*/
+                    }
                 }
                 //show error message if no ticket is selected
                 else {
