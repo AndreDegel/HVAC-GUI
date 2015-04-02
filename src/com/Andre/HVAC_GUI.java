@@ -41,7 +41,7 @@ public class HVAC_GUI extends JFrame {
 
         //add the checkboxes to a button group so that
         //only one at a time can be selected
-        ButtonGroup topGroup = new ButtonGroup();
+        final ButtonGroup topGroup = new ButtonGroup();
         topGroup.add(centralACCheckBox);
         topGroup.add(furnaceCheckBox);
         topGroup.add(waterHeaterCheckBox);
@@ -177,6 +177,8 @@ public class HVAC_GUI extends JFrame {
         serviceList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
+                //while working with selected calls, uncheck Check boxes
+                topGroup.clearSelection();
                 //Create Service call object to display all general fields
                 ServiceCall selected = (ServiceCall) HVAC_GUI.this.serviceList.getSelectedValue();
                 //if combobox is open have textfield show
@@ -186,6 +188,7 @@ public class HVAC_GUI extends JFrame {
                 //Set the textfield according to the individual ticket
                 if (HVAC_GUI.this.serviceList.getSelectedValue().getClass() == Furnace.class) {
                     Furnace f = (Furnace) HVAC_GUI.this.serviceList.getSelectedValue();
+                    lblVar.setText("Type:");
                     Integer age = f.getFurnaceType();
                     String ageString;
                     if (age == 1) {
@@ -199,9 +202,11 @@ public class HVAC_GUI extends JFrame {
                     txtVar.setText(ageString);
                 } else if (HVAC_GUI.this.serviceList.getSelectedValue().getClass() == WaterHeater.class) {
                     WaterHeater w = (WaterHeater) HVAC_GUI.this.serviceList.getSelectedValue();
+                    lblVar.setText("Age:");
                     txtVar.setText(Integer.toString(w.getWaterHeaterAge()));
                 } else {
                     CentralAC ac = (CentralAC) HVAC_GUI.this.serviceList.getSelectedValue();
+                    lblVar.setText("Model:");
                     txtVar.setText(ac.getModel());
                 }
 

@@ -101,7 +101,4 @@ public class Furnace extends ServiceCall {
         }
 
     }
-
-
-
 }
