@@ -1,13 +1,10 @@
 package com.Andre;
 
-//TODO: figure out scroll pane issue
-
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.util.Date;
 
 /**
@@ -59,8 +56,6 @@ public class HVAC_GUI extends JFrame {
         typeComboBox.addItem("Older 'Octopus' Style");
 
 
-
-
         ChangeListener listener = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -98,23 +93,17 @@ public class HVAC_GUI extends JFrame {
                 if (centralACCheckBox.isSelected()) {
                     String model = txtVar.getText();
                     newCall = new CentralAC(address, description, dateReported, model);
-                }
-
-                else if (waterHeaterCheckBox.isSelected()) {
+                } else if (waterHeaterCheckBox.isSelected()) {
                     String ageString = txtVar.getText();
                     int age = Integer.parseInt(ageString);
                     newCall = new WaterHeater(address, description, dateReported, age);
-                }
-
-                else {
-                    String furnaceType = (String)typeComboBox.getSelectedItem();
+                } else {
+                    String furnaceType = (String) typeComboBox.getSelectedItem();
                     if (furnaceType.equals("Forced Air")) {
                         type = 1;
-                    }
-                    else if (furnaceType.equals("Boiler/Radiators")) {
+                    } else if (furnaceType.equals("Boiler/Radiators")) {
                         type = 2;
-                    }
-                    else {
+                    } else {
                         type = 3;
                     }
                     newCall = new Furnace(address, description, dateReported, type);
@@ -134,7 +123,7 @@ public class HVAC_GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //if a ticket is selected to be resolved
                 if (!HVAC_GUI.this.serviceList.isSelectionEmpty()) {
-                   ServiceCall toDelete = (ServiceCall) HVAC_GUI.this.serviceList.getSelectedValue();
+                    ServiceCall toDelete = (ServiceCall) HVAC_GUI.this.serviceList.getSelectedValue();
 
                     Date dateResolved = new Date(); //Default constructor creates date with current date/time
 
@@ -160,7 +149,6 @@ public class HVAC_GUI extends JFrame {
                             continue;
                         }
                     }
-
 
 
                     //If a string was returned, set resolution and date, and delete ticket from list
@@ -189,18 +177,39 @@ public class HVAC_GUI extends JFrame {
         serviceList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
+                //Create Service call object to display all general fields
                 ServiceCall selected = (ServiceCall) HVAC_GUI.this.serviceList.getSelectedValue();
+                //if combobox is open have textfield show
                 txtVar.setVisible(true);
                 typeComboBox.setVisible(false);
-                //if Tickets are deleted.
+
+                //Set the textfield according to the individual ticket
+                if (HVAC_GUI.this.serviceList.getSelectedValue().getClass() == Furnace.class) {
+                    Furnace f = (Furnace) HVAC_GUI.this.serviceList.getSelectedValue();
+                    Integer age = f.getFurnaceType();
+                    String ageString;
+                    if (age == 1) {
+                        ageString = "Forced Air";
+                    } else if (age == 2) {
+                        ageString = "Boiler/Radiators";
+                    } else {
+                        ageString = "Older 'Octopus' Style";
+                    }
+
+                    txtVar.setText(ageString);
+                } else if (HVAC_GUI.this.serviceList.getSelectedValue().getClass() == WaterHeater.class) {
+                    WaterHeater w = (WaterHeater) HVAC_GUI.this.serviceList.getSelectedValue();
+                    txtVar.setText(Integer.toString(w.getWaterHeaterAge()));
+                } else {
+                    CentralAC ac = (CentralAC) HVAC_GUI.this.serviceList.getSelectedValue();
+                    txtVar.setText(ac.getModel());
+                }
+
                 try {
                     txtAddress.setText(selected.getServiceAddress());
                     txtDescription.setText(selected.getProblemDescription());
                     txtReportDate.setText(selected.getReportedDate().toString());
-                    //if (selected.getClass() == Furnace.class) {
-                      //  txtVar.setText("TEST");
-                    //}
-                        //txtVar.setText(HVAC_GUI.this.serviceList.getSelectedValue().getTicketID() + ""); //little hack to trick it into taking the int as String
+
                     try {
                         txtResolution.setText(selected.getResolution());
                         txtResolveDate.setText(selected.getResolvedDate().toString());
@@ -239,11 +248,13 @@ public class HVAC_GUI extends JFrame {
 
         //I just addet this to leave the resolved tickets in the list
         //to display that everything works. This is why it does not have much validation.
+        //I also found an Issue that it does not update fast enough. and throes an error
+        //although it still works all. But like I said is just for display reasons.
         deleteTicketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!HVAC_GUI.this.serviceList.isSelectionEmpty()) {
-                    ServiceCall toDelete = (ServiceCall) HVAC_GUI.this.serviceList.getSelectedValue();
+                    Object toDelete = HVAC_GUI.this.serviceList.getSelectedValue();
                     HVAC_GUI.this.serviceCalltListModel.removeElement(toDelete);
 
                 }

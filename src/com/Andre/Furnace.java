@@ -14,6 +14,11 @@ public class Furnace extends ServiceCall {
 
     private int furnaceType;
 
+    public int getFurnaceType() {
+        return furnaceType;
+    }
+
+
     private static FurnaceTypeManager furnaceTypeManager;
 
 

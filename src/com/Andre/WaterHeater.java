@@ -11,6 +11,10 @@ public class WaterHeater extends ServiceCall {
     private int waterHeaterAge;
     private static Double cityFee = 20.00;
 
+    public int getWaterHeaterAge() {
+        return waterHeaterAge;
+    }
+
     //Constructor that takes the Service call variables and adds the age
     public WaterHeater(String serviceAddress, String problemDescription, Date date, int age) {
         super(serviceAddress, problemDescription, date);
