@@ -241,6 +241,15 @@
           </component>
         </children>
       </scrollpane>
+      <component id="d1b80" class="javax.swing.JButton" binding="deleteTicketButton" default-binding="true">
+        <constraints>
+          <grid row="12" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Delete Ticket"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

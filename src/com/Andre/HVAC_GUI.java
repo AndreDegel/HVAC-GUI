@@ -30,6 +30,7 @@ public class HVAC_GUI extends JFrame {
     private JCheckBox centralACCheckBox;
     private JCheckBox waterHeaterCheckBox;
     private JComboBox typeComboBox;
+    private JButton deleteTicketButton;
 
     DefaultListModel<ServiceCall> serviceCalltListModel;
 
@@ -166,10 +167,8 @@ public class HVAC_GUI extends JFrame {
                     //if not ignore it
                     if ((s != null) && (s.length() > 0)) {
                         txtResolution.setText(s);
-
                         toDelete.setResolvedDate(dateResolved);
                         toDelete.setResolution(txtResolution.getText());
-                        //HVAC_GUI.this.serviceCalltListModel.removeElement(toDelete);
                         clearTxt();
                         txtAddress.setText("");
                         txtDescription.setText("");
@@ -198,9 +197,9 @@ public class HVAC_GUI extends JFrame {
                     txtAddress.setText(selected.getServiceAddress());
                     txtDescription.setText(selected.getProblemDescription());
                     txtReportDate.setText(selected.getReportedDate().toString());
-                    if (selected.getClass() == Furnace.class)
-                        txtVar.setText("TEST");
-
+                    //if (selected.getClass() == Furnace.class) {
+                      //  txtVar.setText("TEST");
+                    //}
                         //txtVar.setText(HVAC_GUI.this.serviceList.getSelectedValue().getTicketID() + ""); //little hack to trick it into taking the int as String
                     try {
                         txtResolution.setText(selected.getResolution());
@@ -237,6 +236,25 @@ public class HVAC_GUI extends JFrame {
         txtAddress.getDocument().addDocumentListener(docListener);
         txtDescription.getDocument().addDocumentListener(docListener);
         txtVar.getDocument().addDocumentListener(docListener);
+
+        //I just addet this to leave the resolved tickets in the list
+        //to display that everything works. This is why it does not have much validation.
+        deleteTicketButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!HVAC_GUI.this.serviceList.isSelectionEmpty()) {
+                    ServiceCall toDelete = (ServiceCall) HVAC_GUI.this.serviceList.getSelectedValue();
+                    HVAC_GUI.this.serviceCalltListModel.removeElement(toDelete);
+
+                }
+                //show error message if no ticket is selected
+                else {
+                    JOptionPane.showMessageDialog(null,
+                            "Please select a ticket to be deleted!",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
 
     //Method to clear the textboxes
