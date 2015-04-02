@@ -29,6 +29,7 @@ public class ServiceCall {
         this.reportedDate = reportedDate;
     }
 
+
     protected String resolution;
     protected double fee;
 

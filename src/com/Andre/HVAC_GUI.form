@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.Andre.HVAC_GUI">
   <grid id="27dc6" binding="rootPanel" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="623" height="400"/>
+      <xy x="20" y="20" width="623" height="484"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -223,17 +223,21 @@
           <enabled value="true"/>
         </properties>
       </component>
-      <scrollpane id="7ffd9" binding="scrollPanel">
+      <scrollpane id="e27cd">
         <constraints>
           <grid row="13" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
-        <properties/>
+        <properties>
+          <minimumSize width="170" height="180"/>
+        </properties>
         <border type="none"/>
         <children>
-          <component id="2717e" class="javax.swing.JList" binding="serviceList">
+          <component id="4949" class="javax.swing.JList" binding="serviceList">
             <constraints/>
-            <properties/>
+            <properties>
+              <valueIsAdjusting value="false"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
